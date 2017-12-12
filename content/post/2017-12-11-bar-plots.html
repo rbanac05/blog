@@ -1,0 +1,37 @@
+---
+title: Bar Plots
+author: Rebecca Banach
+date: '2017-12-11'
+slug: bar-plots
+categories:
+  - R
+tags: []
+---
+
+
+
+<pre class="r"><code>library(sqldf)</code></pre>
+<pre><code>## Warning: package &#39;sqldf&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Warning: package &#39;gsubfn&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Warning: package &#39;proto&#39; was built under R version 3.4.2</code></pre>
+<pre class="r"><code>library(Lahman)</code></pre>
+<pre><code>## Warning: package &#39;Lahman&#39; was built under R version 3.4.2</code></pre>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.4.2</code></pre>
+<p>A bar graph is similar to a histagram, just sideways instead of up and down.</p>
+<pre class="r"><code>query&lt;- &quot;SELECT name,HR
+FROM Teams
+WHERE yearID=1980
+ORDER BY HR&quot;
+
+result&lt;-sqldf(query)
+
+result$name&lt;-factor(result$name,levels=result$name)
+
+ggplot()+
+  geom_bar(data=result,aes(x=name,y=HR),stat=&#39;identity&#39;,color=&quot;blue&quot;,fill=&quot;green&quot;)+
+  coord_flip()+
+  ylab(&quot;Home Runs&quot;)+
+  xlab(&quot;Teams&quot;)+
+  ggtitle(&quot;1980 Home Run Distribution&quot;)</code></pre>
+<p><img src="/post/2017-12-11-bar-plots_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>

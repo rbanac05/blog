@@ -1,0 +1,28 @@
+---
+title: Histograms
+author: Rebecca Banach
+date: '2017-12-11'
+slug: histograms
+categories:
+  - R
+tags: []
+---
+
+```{r message=FALSE, warning=FALSE}
+library(sqldf)
+library(Lahman)
+library(ggplot2)
+```
+
+A histogram is a visual representation of data using one column.
+```{r}
+query<-"SELECT weight
+FROM Master"
+
+result<-sqldf(query)
+
+ggplot()+
+  geom_histogram(data=result,aes(x=weight),color="blue",fill="green",bins=50)+
+  ggtitle("Body Weight Distribution For Baseball Players")
+```
+
