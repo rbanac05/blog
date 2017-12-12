@@ -1,0 +1,36 @@
+---
+title: Bar Plots
+author: Rebecca Banach
+date: '2017-12-11'
+slug: bar-plots
+categories:
+  - R
+tags: []
+---
+
+```{r message=FALSE, Warning=FALSE}
+library(sqldf)
+library(Lahman)
+library(ggplot2)
+```
+
+A bar graph is similar to a histagram, just sideways instead of up and down.
+
+```{r}
+query<- "SELECT name,HR
+FROM Teams
+WHERE yearID=1980
+ORDER BY HR"
+
+result<-sqldf(query)
+
+result$name<-factor(result$name,levels=result$name)
+
+ggplot()+
+  geom_bar(data=result,aes(x=name,y=HR),stat='identity',color="blue",fill="green")+
+  coord_flip()+
+  ylab("Home Runs")+
+  xlab("Teams")+
+  ggtitle("1980 Home Run Distribution")
+```
+
